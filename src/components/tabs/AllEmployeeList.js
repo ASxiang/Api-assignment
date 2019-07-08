@@ -20,7 +20,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import PlusCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import SearchIcon from '@material-ui/icons/Search'; 
+//import SearchIcon from '@material-ui/icons/Search'; 
 import ReactTable from 'react-table';
 
 import 'react-table/react-table.css';

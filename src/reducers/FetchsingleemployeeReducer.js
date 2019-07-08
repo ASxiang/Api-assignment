@@ -2,13 +2,13 @@ import { FETCH_SINGLE_EMPLOYEE_SUCCESS,FETCH_SINGLE_EMPLOYEE_ERROR,FETCH_SINGLE_
 
 export default (state = {
     error: null,
-    fetch: [],
+    fetchsingle: [],
 }, action) => {
   switch (action.type) {
       case FETCH_SINGLE_EMPLOYEE_SUCCESS:
           return {
             ...state,
-            fetch: action.payload,
+            fetchsingle: action.payload,
         }
         break;
     case FETCH_SINGLE_EMPLOYEE_ERROR:

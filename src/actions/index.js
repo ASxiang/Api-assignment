@@ -20,15 +20,18 @@ export const fetchallemployee = () => async dispatch => {
     });
 }
 
-export const fetchsingleemployee  = (id) => async dispatch => {
+export const fetchsingleemployee = (id) => async dispatch => {
    // const query = `query{selectuserwithwithoutpackagepaginate( keyword:"${keyword}",offset:${offset},limit:${limit},sessionKey:"${localStorage.getItem("sessionKey")}") { id, username, status, datetime_created, pw_modified, lastlogin, login_ip, accessibility_user_id, message }}`;
     await axios.get(
-        'http://dummy.restapiexample.com/api/v1/employees/',
+        'http://dummy.restapiexample.com/api/v1/employee/'+id,
         ).then(response => {
             console.log(response);
+            var fetcharr = [];
+            fetcharr.push(response.data)
             return dispatch({
-                type: type.FETCH_SINGLE_EMPLOYEE_SUCCESS,
-                 payload: response.data,
+
+                 type: type.FETCH_SINGLE_EMPLOYEE_SUCCESS,
+                 payload:fetcharr ,
               //  message: data.getprojectlist.message,
     
             });

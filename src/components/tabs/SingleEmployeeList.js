@@ -59,14 +59,14 @@ class SingleEmployeeList extends React.Component {
     componentWillMount() {
         this.setState({ loading: true });
        // this.props.countuser(this.state.searchVal)
-        this.props.fetchsingleemployee(this.state.searchVal, this.state.offset, this.state.rowsPerPage);
+        this.props.fetchsingleemployee(this.state.searchVal);
         this.setState({ loading: false });
     }
 
     componentWillReceiveProps(nextprop) {
         console.log(nextprop)
         if (nextprop.fetchSingledata != this.state.fetchSingledata) {
-            this.setState({ fetchSingledata: nextprop.fetchSingledata.fetch });
+            this.setState({ fetchSingledata: nextprop.fetchSingledata.fetchsingle });
         }
     }
 
@@ -117,17 +117,21 @@ class SingleEmployeeList extends React.Component {
         return rowPerPage * page;
     }
 
-    handleSearch = event => {
-        this.updateSnackbarStatusFalse();   
-        this.setState({ searchVal: event.target.value })
-        let that = this;
-        clearTimeout(this.timer);
-        this.timer = setTimeout(function () {
-            that.props.fetchUser(that.state.searchVal, 0, that.state.rowsPerPage);
-            that.setState({ page: 0 });
-        }, WAIT_INTERVAL);
-    };
-    */
+    
+    
+*/
+   handleSearch = event => {
+   // this.updateSnackbarStatusFalse();   
+   console.log(event.target.value)
+    this.setState({ searchVal: event.target.value })
+    let that = this;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(function () {
+        that.props.fetchsingleemployee(that.state.searchVal);
+        that.setState({ page: 0 });
+    }, WAIT_INTERVAL);
+};
+
 
     render() {
         if (this.state.loading) {
@@ -138,10 +142,13 @@ class SingleEmployeeList extends React.Component {
             );
         }
 
+        
+    
+
         const { classes } = this.props;
         const { fetchSingledata } = this.state;
-        
         const columnData = [
+            { Header: 'ID',accessor: 'id'},
             { Header: 'employee_name',accessor: 'employee_name'},
             { Header: 'employee_age', accessor:'employee_age'},
             { Header: 'employee_salary',accessor: 'employee_salary'}];
@@ -149,14 +156,31 @@ class SingleEmployeeList extends React.Component {
             <MainWrapper
             history={this.props.history}
                 isDisplayOn="none" >
+
+        <Grid container spacing={8} alignItems="flex-end">
+            <Grid item>
+                <SearchIcon />
+            </Grid>
+            <Grid item>
+                <TextField
+                    id="input-with-icon-grid"
+                    label="ID"
+                    onChange={ (e) => this.handleSearch(e) }
+                />
+            </Grid>
+        </Grid>
+    
+             
                 <Paper  >
-                  
+
+                
                 <ReactTable 
                 data={fetchSingledata} 
                 columns = {columnData}
-                noDataText="String"
                 showPagination={true}
                 resizable={false}
+                defaultPageSize={5}
+                showPageSizeOptions={false}
                 SubComponent={
                     this.props.expand
                       ? row => (
@@ -170,6 +194,7 @@ class SingleEmployeeList extends React.Component {
                 />
                    
                 </Paper>
+              
                 
             </MainWrapper>
         );
@@ -191,7 +216,7 @@ let LoadAllWithStyles =  SingleEmployeeList;
     form: "FetchSingleForm"
 })(LoadAllWithStyles);
 
-const mapStateToProps = ({ fetchsingle }) => {
+const mapStateToProps = ({ fetchsingle }) => { console.log(fetchsingle)
     return {
         fetchSingledata: fetchsingle,
     };
